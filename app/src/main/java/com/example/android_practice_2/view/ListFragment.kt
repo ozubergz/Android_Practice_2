@@ -1,6 +1,7 @@
 package com.example.android_practice_2.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,13 @@ class ListFragment : Fragment(), ClickListener {
         viewModel.fetchAPI(args.city)
 
         viewModel.dailyWeather.observe(viewLifecycleOwner, {
-            binding.rvDaily.adapter = DailyAdapter(it.list, this)
-            binding.toolbarTitle.text = it.city.name
-            this.cityName = it.city.name
+            if(it == null) {
+                binding.tvNotFound.text = "CITY NOT FOUND"
+            } else {
+                binding.rvDaily.adapter = DailyAdapter(it.list, this)
+                binding.toolbarTitle.text = it.city.name
+                this.cityName = it.city.name.toString()
+            }
         })
 
         binding.rvDaily.layoutManager = LinearLayoutManager(context)

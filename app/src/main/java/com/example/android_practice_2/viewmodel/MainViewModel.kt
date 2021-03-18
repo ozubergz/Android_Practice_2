@@ -1,6 +1,7 @@
 package com.example.android_practice_2.viewmodel
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,11 +20,10 @@ class MainViewModel : ViewModel() {
 
     fun fetchAPI(city: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = WeatherRepo.getForecast(city, "imperial", "d7de0d816f74102daad512fd9f3c13fc")
-            if(response.isSuccessful) {
-                val result = response.body()
-                _dailyWeather.postValue(result)
-            }
+            val response = WeatherRepo.getForecast(city, "imperial", "")
+            val result = response.body()
+            Log.d("MainViewModel", "fetchAPI: $result")
+            _dailyWeather.postValue(result)
         }
     }
 }

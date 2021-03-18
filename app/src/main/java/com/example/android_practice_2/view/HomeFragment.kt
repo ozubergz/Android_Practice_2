@@ -32,8 +32,12 @@ class HomeFragment : Fragment() {
 
         binding.btnSearch.setOnClickListener {
             val city = binding.etSearch.text.toString()
-            val action = HomeFragmentDirections.actionHomeFragmentToListFragment(city)
-            findNavController().navigate(action)
+            if(city.isNotEmpty()) {
+                val action = HomeFragmentDirections.actionHomeFragmentToListFragment(city)
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(context, "Enter a city name.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
